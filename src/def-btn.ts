@@ -72,6 +72,7 @@ export class DefBtn extends LitElement {
    @property({type: String})
    class: string = '';
 
+
    @property({type: Boolean})
    disabled: boolean = false;
 
