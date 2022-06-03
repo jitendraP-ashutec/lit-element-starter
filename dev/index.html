@@ -1,22 +1,90 @@
 <!DOCTYPE html>
 
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>&lt;my-element> Demo</title>
-    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-    <script src="../node_modules/lit/polyfill-support.js"></script>
-    <script type="module" src="../my-element.js"></script>
-    <style>
-      p {
-        border: solid 1px blue;
-        padding: 8px;
+
+<head>
+  <meta charset="utf-8" />
+  <title>&lt;my-element> Demo</title>
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="../node_modules/lit/polyfill-support.js"></script>
+  <script type="module" src="../my-element.js"></script>
+  <script type="module" src="../def-tab.js"></script>
+  <script type="module" src="../def-tabs.js"></script>
+  <script type="module" src="../def-btn.js"></script>
+  <style>
+    p {
+      border: solid 1px blue;
+      padding: 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <def-btn label="Button" id="my-button" class="def-btn def-btn-primary"></def-btn>
+  <def-btn label="Disable Button" onclick="welcome()" id="my-dis-button" class="def-btn def-btn-primary" disabled="true"></def-btn>
+
+
+  <def-btn label="OnClickExample" onclick="welcome()" id="my-button" class="def-btn def-btn-primary" ></def-btn>
+
+
+  <script>
+
+function createfn(){
+    //debugger;
+    var element = document.createElement("def-btn");
+    element.label = "Dynamic Button";
+    element.class = "def-btn";
+    document.getElementsByTagName('body')[0].appendChild(element);
+
+    }
+    window.onload=createfn();
+
+      document.getElementById("my-button").onclick = function(e){
+          console.log( e.target.label);
+          document.getElementById("my-dis-button").disabled = false;
       }
-    </style>
-  </head>
-  <body>
-    <my-element>
-      <p>This is child content</p>
-    </my-element>
-  </body>
+
+      function welcome(){
+        alert('Wel Come')
+      }
+      
+  </script>
+
+  <!-- <def-tabs>
+    <def-tab tabTitle="Dashboard" >
+      <h4>Content for Dashboard tab. Here is a <a href="javascript://">link</a>that can be accessed via clicking or
+        through keyboard via tabbing.</h4>
+    </def-tab>
+
+    <def-tab tabTitle="Management" >
+      <h4>Content for Management tab.</h4>
+    </def-tab>
+
+    <def-tab tabTitle="Cloud" >
+      <h4>Content for Cloud tab.</h4>
+    </def-tab>
+  </def-tabs> -->
+
+
+</body>
+
 </html>
+
+
+<!--Static Tab example-->
+<!-- <def-tabs [allowAddTabs]="false" (onCloseTab)="closeTab($event)" [allowCloseAllTabs]="closeAllTabs">
+  <def-tab [tabTitle]="'Dashboard'" [isCloseable]="true" *ngIf="dashboardTabEnabled">
+    <h4>Content for Dashboard tab. Here is a <a href="javascript://">link</a>that can be accessed via clicking or
+      through keyboard via tabbing.</h4>
+  </def-tab>
+  <def-tab [tabTitle]="'Management'" [isCloseable]="true" *ngIf="mgmtTabEnabled">
+    <h4>Content for Management tab.</h4>
+  </def-tab>
+  <def-tab [tabTitle]="'Cloud'" [isCloseable]="true" *ngIf="cloudTabEnabled">
+    <h4>Content for Cloud tab.</h4>
+  </def-tab>
+</def-tabs>
+<p>To allow the user to close the active static tab, set the input <code>[allowCloseAllTabs]="true"</code>. You can test
+  it below:</p><button (click)="closeAllTabs=!closeAllTabs" class="btn btn-primary">Toggle Close</button> -->
+<!--End Of Static Tab example-->

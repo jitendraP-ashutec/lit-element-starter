@@ -9,3 +9,8 @@ my-element.d.ts
 my-element.d.ts.map
 # only generated for size check
 my-element.bundled.js
+
+*.js
+*.js.map
+*.d.ts
+*.d.ts.map
