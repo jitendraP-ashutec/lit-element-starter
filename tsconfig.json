@@ -29,6 +29,6 @@
       }
     ]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts","src/assets/*.svg"],
   "exclude": []
 }

@@ -11,11 +11,47 @@
   <script type="module" src="../def-tab.js"></script>
   <script type="module" src="../def-tabs.js"></script>
   <script type="module" src="../def-btn.js"></script>
+  <script type="module" src="../def-dropdown-btn.js"></script>
   <style>
-    p {
-      border: solid 1px blue;
-      padding: 8px;
+
+    .dropdown-item {
+      display: block;
+      width: 100%;
+      padding: 8px 0px 0px 15px;
+      clear: both;
+      font-weight: 400;
+      color: #888888;
+      text-align: inherit;
+      white-space: nowrap;
+      background-color: transparent;
+      text-decoration: none;
+      border: 0;
     }
+
+    .dropdown-menu{
+      position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    /* border-top: none; */
+   }
+    
+   .show{
+      display:contents;
+    }
+  
   </style>
 </head>
 
@@ -28,6 +64,21 @@
   <def-btn label="Secondary " onclick="welcome()" id="my-button" class="def-btn def-btn-secondary" tabindex="2" ></def-btn>
 
   <def-btn label="Secondary Disable"  id="seconday-disable" class="def-btn def-btn-secondary" disabled="true" tabindex="3"></def-btn>
+
+  <div style="margin:20px;"> 
+    <def-dropdown-btn label="DropDown" id="seconday-disable" class="def-btn def-btn-primary" tabindex="3">
+
+      <!-- <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Dropdown button
+      </button> -->
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">CSC</a>
+            <a class="dropdown-item" href="#">PDF</a>
+          </div>
+    </def-dropdown-btn>
+
+  </div>
+ 
 
 
   <script>
