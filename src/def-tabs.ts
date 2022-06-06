@@ -5,7 +5,7 @@
  */
 
 import {LitElement, html, css, PropertyValues} from 'lit';
-import {customElement, property, query, queryAll} from 'lit/decorators.js';
+import {customElement, property, query} from 'lit/decorators.js';
 
 /**
  * An example element.
@@ -69,7 +69,7 @@ export class DefTabs extends LitElement {
     //  console.log(this.renderRoot.querySelector('def-tab'));
     //  setTimeout(() => {
       // console.log();
-      const defTab = this.renderRoot.querySelectorAll('def-tab');
+      // const defTab = this.renderRoot.querySelectorAll('def-tab');
       // const myLitEl = this.get;
       // console.log(myLitEl)
       // console.log(myLitEl?.tabTitle)

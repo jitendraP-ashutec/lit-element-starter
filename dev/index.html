@@ -21,21 +21,23 @@
 
 <body>
 
-  <def-btn label="Button" id="my-button" class="def-btn def-btn-primary"></def-btn>
-  <def-btn label="Disable Button" onclick="welcome()" id="my-dis-button" class="def-btn def-btn-primary" disabled="true"></def-btn>
+  <def-btn  aria-label="Button " label="Buttons" id="my-button" class="def-btn def-btn-primary" tabindex="0"></def-btn>
+  <def-btn label="Disable Button" onclick="welcome()" id="my-dis-button" class="def-btn def-btn-primary" disabled="true" tabindex="1"></def-btn>
 
 
-  <def-btn label="OnClickExample" onclick="welcome()" id="my-button" class="def-btn def-btn-primary" ></def-btn>
+  <def-btn label="Secondary " onclick="welcome()" id="my-button" class="def-btn def-btn-secondary" tabindex="2" ></def-btn>
+
+  <def-btn label="Secondary Disable"  id="seconday-disable" class="def-btn def-btn-secondary" disabled="true" tabindex="3"></def-btn>
 
 
   <script>
 
 function createfn(){
     //debugger;
-    var element = document.createElement("def-btn");
-    element.label = "Dynamic Button";
-    element.class = "def-btn";
-    document.getElementsByTagName('body')[0].appendChild(element);
+    // var element = document.createElement("def-btn");
+    // element.label = "Dynamic Button";
+    // element.class = "def-btn";
+    // document.getElementsByTagName('body')[0].appendChild(element);
 
     }
     window.onload=createfn();

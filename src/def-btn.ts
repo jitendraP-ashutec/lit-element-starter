@@ -19,45 +19,87 @@ export class DefBtn extends LitElement {
   static override styles = css`
    .def-btn-primary {
       color: #fff;
-      background-color: #007bff;
-      border-color: #007bff;
-    }
-
-    .def-btn-primary {
-      color: #fff;
-      background-color: #28a745;
-      border-color: #28a745;
+      background-color: #0076CE;
+      border-color: #0076CE;
     }
 
     .def-btn {
-      display: inline-block;
-      font-weight: 400;
-      text-align: center;
-      white-space: nowrap;
+      height:40px;
+      border-radius: 2px;
+      cursor:pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
       vertical-align: middle;
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
       border: 1px solid transparent;
-      padding: 0.375rem 0.75rem;
-      font-size: 1rem;
-      line-height: 1.5;
-      border-radius: 0.25rem;
-      transition: color .15s
+      padding: 0 15px;
+      font-size:14px;
+
     }
     .def-btn:not(:disabled):not(.disabled) {
         cursor: pointer;
     }
 
-    .def-btn-primary.disabled, .def-btn-primary:disabled {
-      color: #fff;
-      background-color: #28a745;
-      border-color: #28a745;
+    .def-btn-primary:disabled {
+      color: #888888;
+      background-color: #EEEEEE;
+      border-color: #EEEEEE;
     }
 
-    .def-btn.disabled, .def-btn:disabled {
-      opacity: .65;
+    .def-btn-primary:hover:enabled{
+      color: #FFFFFF;
+      background-color: #6BACDE;
+      border-color: #6BACDE;
+    } 
+
+    .def-btn-primary:active:enabled{
+      color: #FFFFFF;
+      background-color: #00447C;
+      border-color: #00447C;
+    }
+
+
+    .def-btn-secondary {
+      color: #0076CE;
+      background-color: transparent;
+    }
+    
+    .def-btn {
+      height:40px;
+      border-radius: 2px;
+      cursor:pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      vertical-align: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      border: 1px solid transparent;
+      padding: 0 15px;
+      font-size:14px;
+
+    }
+
+
+    .def-btn-secondary:disabled {
+      color: #888888;
+      background-color: transparent;
+    }
+
+    .def-btn-secondary:hover:enabled{
+      color: #6BACDE;
+      background-color: transparent;
+    } 
+
+    .def-btn-secondary:active:enabled{
+      color: #00447C;
+      background-color: transparent
     }
 
   `;
@@ -76,13 +118,24 @@ export class DefBtn extends LitElement {
    @property({type: Boolean})
    disabled: boolean = false;
 
+  //  override ariaLabel: string | null;
+
+  // get ariaLabelText(): any{
+  //   console.log('d', this.ariaLabel)
+  //   return this.ariaLabel;
+  // }
+
+
   override render() {
     return  html`<button  type="button"
                           id=${this.id}
                           title=${this.label} 
                           class=${this.class}
                           value=${this.label} 
-                          ?disabled=${this.disabled}>
+                          ?disabled=${this.disabled}
+                          aria-label= ${this.ariaLabel}
+                          tabindex=${this.tabIndex}
+                          >
                           ${this.label}
                </button>`;
   }
@@ -94,3 +147,5 @@ declare global {
     'def-btn': DefBtn;
   }
 }
+
+
