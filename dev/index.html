@@ -16,8 +16,7 @@
 
     .dropdown-item {
       display: block;
-      width: 100%;
-      padding: 8px 0px 0px 15px;
+      padding: 6px 0px 6px 15px;
       clear: both;
       font-weight: 400;
       color: #888888;
@@ -26,32 +25,42 @@
       background-color: transparent;
       text-decoration: none;
       border: 0;
+      cursor: pointer;
     }
 
     .dropdown-menu{
-      position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1000;
-    display: none;
-    float: left;
-    min-width: 10rem;
-    padding: 0.5rem 0;
-    margin: 0.125rem 0 0;
-    font-size: 1rem;
-    color: #212529;
-    text-align: left;
-    list-style: none;
+      
+      top: 100%;
+      left: 0;
+      z-index: 1000;
+    
+      visibility: hidden;
+      float: left;
+      min-width: 10rem;
+      max-width: 18rem;
+      padding: 0.5rem 0;
+      margin: 0.125rem 0 0;
+      font-size: 1rem;
+      color: #212529;
+      text-align: left;
+      list-style: none;
+
     background-color: #fff;
     background-clip: padding-box;
+    /* background-color: red; */
     border: 1px solid rgba(0,0,0,.15);
     /* border-top: none; */
    }
     
-   .show{
-      display:contents;
+   .dropdown-menu.show{
+      visibility: visible;
     }
   
+    .dropdown-item:hover {
+      background: #d8e3e9;
+      color: #000;
+}
+
   </style>
 </head>
 
@@ -65,19 +74,23 @@
 
   <def-btn label="Secondary Disable"  id="seconday-disable" class="def-btn def-btn-secondary" disabled="true" tabindex="3"></def-btn>
 
-  <div style="margin:20px;"> 
-    <def-dropdown-btn label="DropDown" id="seconday-disable" class="def-btn def-btn-primary" tabindex="3">
-
-      <!-- <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Dropdown button
-      </button> -->
+    <!-- <div style="margin:20px;"> 
+      <def-dropdown-btn label="DropDown" id="seconday-disable" class="def-btn def-btn-primary" tabindex="3">
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">CSC</a>
+              <a class="dropdown-item" href="#">PDF</a>
+            </div>
+      </def-dropdown-btn>
+    </div> -->
+    <!-- <div style="height:900px;width:100%;background:#888888"> </div> -->
+  <!-- <div style="height: 800px;width:800px;border: 1px solid #000;display:flex;align-items: center;justify-content: center;">  -->
+    <def-dropdown-btn label="Second Dropdown" id="seconday-disable" class="def-btn def-btn-primary" tabindex="3" dropdownPosition="bottom-left" >
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">CSC</a>
-            <a class="dropdown-item" href="#">PDF</a>
+            <div class="dropdown-item" onclick="welcome()"> Second Long Text CSC </div>
+            <div class="dropdown-item" > Second PDF </div>
           </div>
     </def-dropdown-btn>
-
-  </div>
+  <!-- </div> -->
  
 
 
