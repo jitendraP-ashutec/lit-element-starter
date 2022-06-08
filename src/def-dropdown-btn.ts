@@ -313,7 +313,6 @@ export class DefDropDownBtn extends LitElement {
 
   override render() {
     return html`
-                  <div>
                     <button type="button"
                           @click="${this._handleClick}"
                           id=${this.id}
@@ -327,10 +326,8 @@ export class DefDropDownBtn extends LitElement {
                           >
                           ${this.label}
                      </button>
-                  </div>
-                <div>
                   <slot></slot>
-                </div>
+               
                `;
   }
 
