@@ -5,7 +5,7 @@
  */
 
 import { LitElement, html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 
  export const DEFAULT_MARGIN = 3;
 
@@ -135,6 +135,9 @@ export class DefDropDownBtn extends LitElement {
   @property({ type: String })
   dropdownPosition: string = 'bottom-left';
 
+  @state()
+  private _arialExpanded: boolean = false;
+
 
   private _handleClick() {
     let slt: any = this.assignedNodes;
@@ -145,10 +148,10 @@ export class DefDropDownBtn extends LitElement {
           slt.forEach((element: any) => {
             if (element?.classList?.contains('dropdown-menu')) {
               if (element.classList.contains('show')) {
-                element.classList.remove('show')
+                element.classList.remove('show');
+                this._arialExpanded = false;
               } else {
-    
-               
+                this._arialExpanded = true;
                 element.classList.add('show')
                 element.style.position = 'absolute';
                 element.style.inset = '0px auto auto 0px';
@@ -249,9 +252,7 @@ export class DefDropDownBtn extends LitElement {
   }
   get assignedNodes() {
     if (this.shadowRoot) {
-
       const slot = this.shadowRoot.querySelector('slot');
-
       if (slot) {
         let slt: any = slot.assignedNodes();
         return slt;
@@ -265,7 +266,8 @@ export class DefDropDownBtn extends LitElement {
     if (slt && slt.length > 0) {
       slt.forEach((element: any) => {
         if (element?.classList?.contains('dropdown-menu')) {
-          element.classList.remove('show')
+          element.classList.remove('show');
+          this._arialExpanded = false;
         }
       });
     }
@@ -306,6 +308,7 @@ export class DefDropDownBtn extends LitElement {
                           ?disabled=${this.disabled}
                           aria-label= ${this.ariaLabel}
                           tabindex=${this.tabIndex}
+                          aria-expanded=${this._arialExpanded}
                           >
                           ${this.label}
                      </button>
