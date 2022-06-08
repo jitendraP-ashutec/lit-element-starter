@@ -119,11 +119,7 @@ export class DefDropDownBtn extends LitElement {
     }
   
   `;
-
-
-  /**
-   * The number of times the button has been clicked.
-   */
+  
   @property({ type: String })
   label: string = '';
 
@@ -138,31 +134,24 @@ export class DefDropDownBtn extends LitElement {
   dropdownPosition: string = 'bottom-left';
 
 
-  private _handleClick(e: any) {
+  private _handleClick() {
     let slt: any = this.assignedNodes;
     if (this.shadowRoot) {
       const buttons = this.shadowRoot.querySelector('button');
       if (buttons) {
-        const domRect: DOMRect = buttons.getBoundingClientRect();
         if (slt.length > 0) {
           slt.forEach((element: any) => {
             if (element?.classList?.contains('dropdown-menu')) {
               if (element.classList.contains('show')) {
                 element.classList.remove('show')
               } else {
-                // if(this.)
+    
                 const dropdownMenuItem =  element.getBoundingClientRect();
                 const point:any =  this.getPositionPoint(dropdownMenuItem);
-
-                // const positionX = domRect.x + domRect.width;
-                // const positionY = domRect.y + domRect.height;
                 element.classList.add('show')
                 element.style.position = 'absolute';
                 element.style.inset = '0px auto auto 0px';
                 element.style.transform = `translateX(${point.positionX}px) translateY(${point.positionY}px)`;
-                //         position: absolute;
-                // inset: 0px auto auto 0px;
-                // transform: translateX(0px) translateY(2px);
               }
             }
           });
@@ -172,26 +161,17 @@ export class DefDropDownBtn extends LitElement {
   }
 
   getPositionPoint(dropdownMenuItem:DOMRect) {
-    console.log(this.dropdownPosition)
-
     if (this.shadowRoot) {
       const button = this.shadowRoot.querySelector('button');
-      console.log(document.documentElement.scrollTop);
       const scrollX = document.documentElement.scrollTop;
-      // const dropdownMenu = this.shadowRoot.querySelector('.dropdown-menu');
-      // console.log(dropdownMenu);
       if (button) {
-        
         const domRect: DOMRect = button.getBoundingClientRect();
-        console.log(domRect);
-        // console.log(dropdownMenuItem.width -  domRect.right)
-// console.log({domRect})
         switch (this.dropdownPosition) {
           case 'bottom-left':
           return {
               positionX: domRect.x,
               positionY: (scrollX + domRect.y + domRect.height)
-          }
+            }
             break;
           case 'bottom-right':
              let positionX = domRect.right - dropdownMenuItem.width;
@@ -210,12 +190,9 @@ export class DefDropDownBtn extends LitElement {
               positionX: domRect.x ,
               positionY: (scrollX + domRect.y - dropdownMenuItem.height)
             }
-
             break;
-
           case 'top-right':
             let positionTopX = domRect.right - dropdownMenuItem.width;
-            console.log(positionTopX);
             if(positionTopX <= 0){
               positionTopX = domRect.x;
             }
@@ -223,43 +200,50 @@ export class DefDropDownBtn extends LitElement {
              positionX: (positionTopX),
              positionY: (scrollX + domRect.y - dropdownMenuItem.height)
          }
-            return {
-              positionX: (positionX),
-              positionY: (scrollX + domRect.y + domRect.height)
-          }
             break;
-
           case 'left-bottom':
-
+            return {
+              positionX: domRect.x  - dropdownMenuItem.width - 3 ,
+              positionY: (scrollX + domRect.y)
+            }
             break;
-
           case 'left-top':
-
+            return {
+              positionX: (domRect.x  - dropdownMenuItem.width - 3),
+              positionY: (scrollX + domRect.y - dropdownMenuItem.height + domRect.height)
+            }
             break;
 
           case 'right-top':
+           
             return {
-              positionX: domRect.x + domRect.width,
-              positionY: domRect.y
+              positionX: domRect.x  + dropdownMenuItem.width - 3 ,
+              positionY: (scrollX + domRect.y)
             }
             break;
 
           case 'right-bottom':
+            console.log("right top");
             return {
-              positionX: domRect.x + domRect.width,
-              positionY: domRect.y
+              positionX: (domRect.x  + domRect.width + 3),
+              positionY: (scrollX + domRect.y - dropdownMenuItem.height + domRect.height)
             }
-
             break;
-
-
 
           default:
+            return {
+
+            }
             break;
         }
-
       }
+      return {
+
+      };
     }
+    return {
+
+    };
     // dropdownPosition
   }
   get assignedNodes() {
