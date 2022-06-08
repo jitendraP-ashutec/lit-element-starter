@@ -5,6 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <title>&lt;my-element> Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
   <script src="../node_modules/lit/polyfill-support.js"></script>
   <script type="module" src="../my-element.js"></script>
@@ -29,11 +30,9 @@
     }
 
     .dropdown-menu{
-      
       top: 100%;
       left: 0;
       z-index: 1000;
-    
       visibility: hidden;
       float: left;
       min-width: 10rem;
@@ -44,22 +43,27 @@
       color: #212529;
       text-align: left;
       list-style: none;
-
-    background-color: #fff;
-    background-clip: padding-box;
-    /* background-color: red; */
-    border: 1px solid rgba(0,0,0,.15);
-    /* border-top: none; */
+      background-color: #fff;
+      background-clip: padding-box;
+      border: 1px solid rgba(0,0,0,.15);
+      display: none;
    }
     
    .dropdown-menu.show{
       visibility: visible;
+      display: block;
     }
   
     .dropdown-item:hover {
       background: #d8e3e9;
       color: #000;
-}
+    }
+
+    .dropdown-menu .dropdown-divider {
+      font-size: .6rem;
+      border-bottom: 0.05rem solid #e8e8e8;
+      margin: 0.3rem 0;
+    }
 
   </style>
 </head>
@@ -84,16 +88,52 @@
     </div> -->
     <!-- <div style="height:900px;width:100%;background:#888888"> </div> -->
   <!-- <div style="height: 800px;width:800px;border: 1px solid #000;display:flex;align-items: center;justify-content: center;">  -->
+    <div>
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    </div>
     <div style="text-align: center;">
-      <def-dropdown-btn label="Dropdown" id="seconday-disable" class="def-btn def-btn-primary" tabindex="3" dropdownPosition="bottom-left" >
+      <def-dropdown-btn label="Dropdown" id="seconday-disable" class="def-btn def-btn-primary" tabindex="3" dropdownPosition="right-bottom" >
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <div class="dropdown-item" onclick="welcome()"> Second Long Text CSC </div>
               <div class="dropdown-item" > Second PDF </div>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-item" > Third Item </div>
             </div>
       </def-dropdown-btn>
-  </div>
+    </div>
+    <div>
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    </div>
+    <!-- style="margin-top:300px;text-align: center;" -->
+<div >
+      <def-dropdown-btn label="2 Dropdown" id="seconday-disable" class="def-btn def-btn-primary" tabindex="3" dropdownPosition="right-top" >
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="dropdown-item" onclick="welcome2()"> 2 Second Long Text CSC </div>
+          <div class="dropdown-item" > 2 Second PDF </div>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-item" > 2 Third Item </div>
+        </div>
+  </def-dropdown-btn>
+  </div> 
   <!-- </div> -->
- 
+  <div>
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+  </div>
 
 
   <script>
@@ -115,6 +155,10 @@ function createfn(){
 
       function welcome(){
         alert('Wel Come')
+      }
+
+      function welcome2(){
+        alert('Wel Come 2')
       }
       
   </script>

@@ -7,10 +7,12 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
+ export const DEFAULT_MARGIN = 3;
+
 /**
  * An example element.
  *
- * @fires count-changed - Indicates when the count changes
+ * @fires dropdown btn - Indicates when the count changes
  * @slot - This element has a slot
  * @csspart button - The button
  */
@@ -119,7 +121,7 @@ export class DefDropDownBtn extends LitElement {
     }
   
   `;
-  
+
   @property({ type: String })
   label: string = '';
 
@@ -146,11 +148,12 @@ export class DefDropDownBtn extends LitElement {
                 element.classList.remove('show')
               } else {
     
-                const dropdownMenuItem =  element.getBoundingClientRect();
-                const point:any =  this.getPositionPoint(dropdownMenuItem);
+               
                 element.classList.add('show')
                 element.style.position = 'absolute';
                 element.style.inset = '0px auto auto 0px';
+                const dropdownMenuItem =  element.getBoundingClientRect();
+                const point:any =  this.getPositionPoint(dropdownMenuItem);
                 element.style.transform = `translateX(${point.positionX}px) translateY(${point.positionY}px)`;
               }
             }
@@ -161,21 +164,22 @@ export class DefDropDownBtn extends LitElement {
   }
 
   getPositionPoint(dropdownMenuItem:DOMRect) {
+
     if (this.shadowRoot) {
       const button = this.shadowRoot.querySelector('button');
       const scrollX = document.documentElement.scrollTop;
       if (button) {
         const domRect: DOMRect = button.getBoundingClientRect();
+        const defaultPosition = {
+          positionX: domRect.x,
+          positionY: (scrollX + domRect.y + domRect.height)
+        };
         switch (this.dropdownPosition) {
           case 'bottom-left':
-          return {
-              positionX: domRect.x,
-              positionY: (scrollX + domRect.y + domRect.height)
-            }
+          return defaultPosition;
             break;
           case 'bottom-right':
-             let positionX = domRect.right - dropdownMenuItem.width;
-             console.log(positionX);
+            let positionX =  (domRect.right - dropdownMenuItem.width)
              if(positionX <= 0){
               positionX = domRect.x;
              }
@@ -188,7 +192,7 @@ export class DefDropDownBtn extends LitElement {
           case 'top-left':
             return {
               positionX: domRect.x ,
-              positionY: (scrollX + domRect.y - dropdownMenuItem.height)
+              positionY: (scrollX + domRect.y - dropdownMenuItem.height - DEFAULT_MARGIN)
             }
             break;
           case 'top-right':
@@ -198,53 +202,50 @@ export class DefDropDownBtn extends LitElement {
             }
            return {
              positionX: (positionTopX),
-             positionY: (scrollX + domRect.y - dropdownMenuItem.height)
+             positionY: (scrollX + domRect.y - dropdownMenuItem.height - DEFAULT_MARGIN)
          }
             break;
           case 'left-bottom':
             return {
-              positionX: domRect.x  - dropdownMenuItem.width - 3 ,
+              positionX: domRect.x  - dropdownMenuItem.width - DEFAULT_MARGIN ,
               positionY: (scrollX + domRect.y)
             }
             break;
           case 'left-top':
             return {
-              positionX: (domRect.x  - dropdownMenuItem.width - 3),
+              positionX: (domRect.x  - dropdownMenuItem.width - DEFAULT_MARGIN),
               positionY: (scrollX + domRect.y - dropdownMenuItem.height + domRect.height)
             }
             break;
 
           case 'right-top':
-           
             return {
-              positionX: domRect.x  + dropdownMenuItem.width - 3 ,
+              positionX: domRect.x  + domRect.width +  DEFAULT_MARGIN ,
               positionY: (scrollX + domRect.y)
             }
             break;
 
           case 'right-bottom':
-            console.log("right top");
             return {
-              positionX: (domRect.x  + domRect.width + 3),
+              positionX: (domRect.x  + domRect.width + DEFAULT_MARGIN),
               positionY: (scrollX + domRect.y - dropdownMenuItem.height + domRect.height)
             }
             break;
 
           default:
-            return {
-
-            }
+            return defaultPosition
             break;
         }
       }
       return {
-
+        positionX:-1,
+        positionY:-1
       };
     }
     return {
-
+      positionX:-1,
+      positionY:-1
     };
-    // dropdownPosition
   }
   get assignedNodes() {
     if (this.shadowRoot) {
@@ -253,7 +254,6 @@ export class DefDropDownBtn extends LitElement {
 
       if (slot) {
         let slt: any = slot.assignedNodes();
-        console.log(slt);
         return slt;
       }
     }
