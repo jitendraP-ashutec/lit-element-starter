@@ -13,6 +13,7 @@
   <script type="module" src="../def-tabs.js"></script>
   <script type="module" src="../def-btn.js"></script>
   <script type="module" src="../def-dropdown-btn.js"></script>
+  <script type="module" src="../def-dropdown-menu.js"></script>
   <style>
 
     .dropdown-item {
@@ -98,12 +99,15 @@
     </div>
     <div style="text-align: center;">
       <def-dropdown-btn label="Dropdown" id="seconday-disable" class="def-btn def-btn-primary" tabindex="3" dropdownPosition="right-bottom" >
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <def-dropdown-menu>
+            <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> -->
               <div class="dropdown-item" onclick="welcome()"> Second Long Text CSC </div>
               <div class="dropdown-item" > Second PDF </div>
               <div class="dropdown-divider"></div>
               <div class="dropdown-item" > Third Item </div>
-            </div>
+            <!-- </div> -->
+          </def-dropdown-menu> 
+       
       </def-dropdown-btn>
     </div>
     <div>
@@ -117,12 +121,15 @@
     <!-- style="margin-top:300px;text-align: center;" -->
 <div >
       <def-dropdown-btn label="2 Dropdown" id="seconday-disable" class="def-btn def-btn-primary" tabindex="3" dropdownPosition="right-top" >
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <div class="dropdown-item" onclick="welcome2()"> 2 Second Long Text CSC </div>
-          <div class="dropdown-item" > 2 Second PDF </div>
-          <div class="dropdown-divider"></div>
-          <div class="dropdown-item" > 2 Third Item </div>
-        </div>
+        <def-dropdown-menu>
+          <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> -->
+            <div class="dropdown-item" onclick="welcome2()"> 2 Second Long Text CSC </div>
+            <div class="dropdown-item" > 2 Second PDF </div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item" > 2 Third Item </div>
+          <!-- </div> -->
+        </def-dropdown-menu>
+        
   </def-dropdown-btn>
   </div> 
   <!-- </div> -->

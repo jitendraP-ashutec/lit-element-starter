@@ -7,7 +7,7 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
- export const DEFAULT_MARGIN = 3;
+export const DEFAULT_MARGIN = 3;
 
 /**
  * An example element.
@@ -146,7 +146,9 @@ export class DefDropDownBtn extends LitElement {
       if (buttons) {
         if (slt.length > 0) {
           slt.forEach((element: any) => {
-            if (element?.classList?.contains('dropdown-menu')) {
+            if (element?.tagName === 'DEF-DROPDOWN-MENU') {
+              console.log()
+              // const menuItem = element.querySelector('.dropdown-menu');
               if (element.classList.contains('show')) {
                 element.classList.remove('show');
                 this._arialExpanded = false;
@@ -155,8 +157,8 @@ export class DefDropDownBtn extends LitElement {
                 element.classList.add('show')
                 element.style.position = 'absolute';
                 element.style.inset = '0px auto auto 0px';
-                const dropdownMenuItem =  element.getBoundingClientRect();
-                const point:any =  this.getPositionPoint(dropdownMenuItem);
+                const dropdownMenuItem = element.getBoundingClientRect();
+                const point: any = this._getPositionPoint(dropdownMenuItem);
                 element.style.transform = `translateX(${point.positionX}px) translateY(${point.positionY}px)`;
               }
             }
@@ -166,7 +168,7 @@ export class DefDropDownBtn extends LitElement {
     }
   }
 
-  getPositionPoint(dropdownMenuItem:DOMRect) {
+  private _getPositionPoint(dropdownMenuItem: DOMRect) {
 
     if (this.shadowRoot) {
       const button = this.shadowRoot.querySelector('button');
@@ -179,58 +181,58 @@ export class DefDropDownBtn extends LitElement {
         };
         switch (this.dropdownPosition) {
           case 'bottom-left':
-          return defaultPosition;
+            return defaultPosition;
             break;
           case 'bottom-right':
-            let positionX =  (domRect.right - dropdownMenuItem.width)
-             if(positionX <= 0){
+            let positionX = (domRect.right - dropdownMenuItem.width)
+            if (positionX <= 0) {
               positionX = domRect.x;
-             }
+            }
             return {
               positionX: (positionX),
               positionY: (scrollX + domRect.y + domRect.height)
-          }
+            }
             break;
 
           case 'top-left':
             return {
-              positionX: domRect.x ,
+              positionX: domRect.x,
               positionY: (scrollX + domRect.y - dropdownMenuItem.height - DEFAULT_MARGIN)
             }
             break;
           case 'top-right':
             let positionTopX = domRect.right - dropdownMenuItem.width;
-            if(positionTopX <= 0){
+            if (positionTopX <= 0) {
               positionTopX = domRect.x;
             }
-           return {
-             positionX: (positionTopX),
-             positionY: (scrollX + domRect.y - dropdownMenuItem.height - DEFAULT_MARGIN)
-         }
+            return {
+              positionX: (positionTopX),
+              positionY: (scrollX + domRect.y - dropdownMenuItem.height - DEFAULT_MARGIN)
+            }
             break;
           case 'left-bottom':
             return {
-              positionX: domRect.x  - dropdownMenuItem.width - DEFAULT_MARGIN ,
+              positionX: domRect.x - dropdownMenuItem.width - DEFAULT_MARGIN,
               positionY: (scrollX + domRect.y)
             }
             break;
           case 'left-top':
             return {
-              positionX: (domRect.x  - dropdownMenuItem.width - DEFAULT_MARGIN),
+              positionX: (domRect.x - dropdownMenuItem.width - DEFAULT_MARGIN),
               positionY: (scrollX + domRect.y - dropdownMenuItem.height + domRect.height)
             }
             break;
 
           case 'right-top':
             return {
-              positionX: domRect.x  + domRect.width +  DEFAULT_MARGIN ,
+              positionX: domRect.x + domRect.width + DEFAULT_MARGIN,
               positionY: (scrollX + domRect.y)
             }
             break;
 
           case 'right-bottom':
             return {
-              positionX: (domRect.x  + domRect.width + DEFAULT_MARGIN),
+              positionX: (domRect.x + domRect.width + DEFAULT_MARGIN),
               positionY: (scrollX + domRect.y - dropdownMenuItem.height + domRect.height)
             }
             break;
@@ -241,13 +243,13 @@ export class DefDropDownBtn extends LitElement {
         }
       }
       return {
-        positionX:-1,
-        positionY:-1
+        positionX: -1,
+        positionY: -1
       };
     }
     return {
-      positionX:-1,
-      positionY:-1
+      positionX: -1,
+      positionY: -1
     };
   }
   get assignedNodes() {
@@ -262,14 +264,23 @@ export class DefDropDownBtn extends LitElement {
   }
 
   _closeButton = () => {
-    let slt: any = this.assignedNodes;
-    if (slt && slt.length > 0) {
-      slt.forEach((element: any) => {
-        if (element?.classList?.contains('dropdown-menu')) {
-          element.classList.remove('show');
-          this._arialExpanded = false;
+    let nodes: any = this.assignedNodes;
+    if (this.shadowRoot) {
+      const buttons = this.shadowRoot.querySelector('button');
+      if (buttons) {
+        if (nodes.length > 0) {
+          if (nodes && nodes.length > 0) {
+            nodes.forEach((element: any) => {
+              if (element?.tagName === 'DEF-DROPDOWN-MENU') {
+                if (element) {
+                  element.classList.remove('show');
+                  this._arialExpanded = false;
+                }
+              }
+            });
+          }
         }
-      });
+      }
     }
   }
 
@@ -285,6 +296,9 @@ export class DefDropDownBtn extends LitElement {
     for (let item of dropDownItems) {
       item.addEventListener("click", this._closeButton);
     }
+
+    window.addEventListener('scroll', this._closeButton);
+
   }
 
 
@@ -294,6 +308,7 @@ export class DefDropDownBtn extends LitElement {
     for (let item of dropDownItems) {
       item.removeEventListener("click", this._closeButton);
     }
+    window.removeEventListener('scroll', this._closeButton);
   }
 
   override render() {
@@ -316,8 +331,6 @@ export class DefDropDownBtn extends LitElement {
                 <div>
                   <slot></slot>
                 </div>
-
-               
                `;
   }
 
