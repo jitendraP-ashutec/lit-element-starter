@@ -14,6 +14,8 @@ import {customElement, property} from 'lit/decorators.js';
  * @slot - This element has a slot
  * @csspart button - The button
  */
+//  in lit dev web have to manually add all property and events
+// https://github.com/lit/lit/discussions/2685
 @customElement('def-btn')
 export class DefBtn extends LitElement {
   static override styles = css`

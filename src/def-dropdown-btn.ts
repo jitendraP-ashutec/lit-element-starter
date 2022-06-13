@@ -6,6 +6,7 @@
 
 import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { DefDropDownMenu } from './def-dropdown-menu';
 
 export const DEFAULT_MARGIN = 3;
 
@@ -135,6 +136,11 @@ export class DefDropDownBtn extends LitElement {
   @property({ type: String })
   dropdownPosition: string = 'bottom-left';
 
+  @property({ type: Boolean })
+  defDropdownTrigger: boolean;
+
+  
+
   @state()
   private _arialExpanded: boolean = false;
 
@@ -143,23 +149,42 @@ export class DefDropDownBtn extends LitElement {
     let slt: any = this.assignedNodes;
     if (this.shadowRoot) {
       const buttons = this.shadowRoot.querySelector('button');
+      // if(buttons)
+     
       if (buttons) {
+        console.log(this.defDropdownTrigger)
+        let parentElement:DefDropDownMenu | undefined;
         if (slt.length > 0) {
           slt.forEach((element: any) => {
+            console.log(element);
             if (element?.tagName === 'DEF-DROPDOWN-MENU') {
-              console.log()
               // const menuItem = element.querySelector('.dropdown-menu');
               if (element.classList.contains('show')) {
                 element.classList.remove('show');
                 this._arialExpanded = false;
               } else {
+                if(this.defDropdownTrigger){
+                  const menuElements =  Array.from(document.querySelectorAll('def-dropdown-menu'));
+                  console.log({menuElements})
+                  parentElement = menuElements.filter(ele => {
+                    return ele.classList.contains('show')
+                  }).pop();
+                  console.log(parentElement?.getBoundingClientRect().width);
+  
+                  // if(openedEl)
+                }
+                
+
                 this._arialExpanded = true;
                 element.classList.add('show')
                 element.style.position = 'absolute';
-                element.style.inset = '0px auto auto 0px';
+                // element.style.inset = '0px auto auto 0px';
                 const dropdownMenuItem = element.getBoundingClientRect();
-                const point: any = this._getPositionPoint(dropdownMenuItem);
-                element.style.transform = `translateX(${point.positionX}px) translateY(${point.positionY}px)`;
+                console.log(dropdownMenuItem)
+                const point: any = this._getPositionPoint(dropdownMenuItem,this.defDropdownTrigger,parentElement);
+                // element.style.transform = `translateX(${point.positionX}px) translateY(${point.positionY}px)`;
+                element.style.left = `${point.positionX}px`;
+                element.style.top = `${point.positionY}px`;
               }
             }
           });
@@ -168,11 +193,28 @@ export class DefDropDownBtn extends LitElement {
     }
   }
 
-  private _getPositionPoint(dropdownMenuItem: DOMRect) {
+  private _getPositionPoint(dropdownMenuItem: DOMRect, isSubMenu?:boolean, parentElement?:DefDropDownMenu) {
 
     if (this.shadowRoot) {
       const button = this.shadowRoot.querySelector('button');
       const scrollX = document.documentElement.scrollTop;
+
+      if(isSubMenu && parentElement){
+        console.log(parentElement.getBoundingClientRect())
+        console.log(parentElement.getClientRects())
+        // console.log("on 205", button?.offsetLeft);
+        // console.log("on 205", button?.offsetWidth);
+        // console.log("on 205", button?.offsetTop);
+        // console.log("on 205", button?.offsetParent);
+        console.log(dropdownMenuItem.width + parentElement.getBoundingClientRect().width)
+
+        return {
+          positionX: parentElement.getBoundingClientRect().width,
+          positionY: button?.offsetTop
+        }
+
+      }
+      console.log(button);
       if (button) {
         const domRect: DOMRect = button.getBoundingClientRect();
         const defaultPosition = {
@@ -297,7 +339,7 @@ export class DefDropDownBtn extends LitElement {
       item.addEventListener("click", this._closeButton);
     }
 
-    window.addEventListener('scroll', this._closeButton);
+    // window.addEventListener('scroll', this._closeButton);
 
   }
 
@@ -308,7 +350,7 @@ export class DefDropDownBtn extends LitElement {
     for (let item of dropDownItems) {
       item.removeEventListener("click", this._closeButton);
     }
-    window.removeEventListener('scroll', this._closeButton);
+    // window.removeEventListener('scroll', this._closeButton);
   }
 
   override render() {

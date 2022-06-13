@@ -14,6 +14,8 @@
   <script type="module" src="../def-btn.js"></script>
   <script type="module" src="../def-dropdown-btn.js"></script>
   <script type="module" src="../def-dropdown-menu.js"></script>
+  <!-- <script type="module" src="../def-styles.js"></script> -->
+  <script type="module" src="../def-button.js"></script>
   <style>
 
     .dropdown-item {
@@ -31,7 +33,7 @@
     }
 
     .dropdown-menu{
-      top: 100%;
+      /* top: 100%;
       left: 0;
       z-index: 1000;
       visibility: hidden;
@@ -47,7 +49,25 @@
       background-color: #fff;
       background-clip: padding-box;
       border: 1px solid rgba(0,0,0,.15);
-      display: none;
+      display: none; */
+
+      display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 6rem;
+    max-width: 18rem;
+    background: #fff;
+
+    border: 0.05rem solid #ccc;
+    border-radius: 0.15rem;
+    box-shadow: 0 0.05rem 0.15rem hsl(0deg 0% 55% / 25%);
+    box-shadow: 0 0.05rem 0.15rem var(--clr-dropdown-box-shadow,hsla(0,0%,54.9%,.25));
+    margin-top: 0.1rem;
+    padding: 0.6rem 0;
+    visibility: hidden;
+    z-index: 1060;
    }
     
    .dropdown-menu.show{
@@ -66,11 +86,48 @@
       margin: 0.3rem 0;
     }
 
+    .def-btn-primary {
+       color: #fff;
+       background-color: #0076CE;
+       border-color: #0076CE;
+     }
+
+   .def-button {
+       height:40px;
+       border-radius: 2px;
+       cursor:pointer;
+       -webkit-user-select: none;
+       -moz-user-select: none;
+       -ms-user-select: none;
+       vertical-align: middle;
+       -webkit-user-select: none;
+       -moz-user-select: none;
+       -ms-user-select: none;
+       user-select: none;
+       border: 1px solid transparent;
+       padding: 0 15px;
+       font-size:14px;
+     }
+
+     .corp-button {
+            background-color: #e7e7e7;
+            color: black;
+            border: none;
+            border-radius: 4px;
+            padding: 15px 32px;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+          }
+          .corp-button:hover {
+            background-color: #aaaaaa;
+          }
+
   </style>
 </head>
 
 <body>
-
+  <button is="def-button" class="corp-button">  Value </button>
   <def-btn  aria-label="Button " label="Buttons" id="my-button" class="def-btn def-btn-primary" tabindex="0"></def-btn>
   <def-btn label="Disable Button" onclick="welcome()" id="my-dis-button" class="def-btn def-btn-primary" disabled="true" tabindex="1"></def-btn>
 
@@ -98,7 +155,7 @@
       Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
     </div>
     <div style="text-align: center;">
-      <def-dropdown-btn label="Dropdown" id="seconday-disable" class="def-btn def-btn-primary" tabindex="3" dropdownPosition="right-bottom" >
+      <def-dropdown-btn label="Dropdown" id="seconday-disable" class="def-btn def-btn-primary" tabindex="3" dropdownPosition="left-top" >
           <def-dropdown-menu>
               <div class="dropdown-item" onclick="welcome()"> Second Long Text CSC </div>
               <div class="dropdown-item" > Second PDF </div>
@@ -124,6 +181,15 @@
             <div class="dropdown-item" > 2 Second PDF </div>
             <div class="dropdown-divider"></div>
             <div class="dropdown-item" > 2 Third Item </div>
+            <div class="dropdown-item" > 2 Third Item </div>
+            <div class="dropdown-item" > 2 Third Item </div>
+            <div class="dropdown-item" > 2 Third Item </div>
+            
+            <def-dropdown-btn label="2 Dropdown"  tabindex="3" dropdownPosition="right-top" defDropdownTrigger >
+              <def-dropdown-menu>
+                  <div class="dropdown-item" onclick="welcome2()"> 2 Level Long Text CSC </div>
+                  </def-dropdown-menu>
+                </def-dropdown-btn>
         </def-dropdown-menu>
         
   </def-dropdown-btn>
