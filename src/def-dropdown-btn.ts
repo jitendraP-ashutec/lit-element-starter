@@ -139,7 +139,7 @@ export class DefDropDownBtn extends LitElement {
   @property({ type: Boolean })
   defDropdownTrigger: boolean;
 
-  
+
 
   @state()
   private _arialExpanded: boolean = false;
@@ -150,10 +150,10 @@ export class DefDropDownBtn extends LitElement {
     if (this.shadowRoot) {
       const buttons = this.shadowRoot.querySelector('button');
       // if(buttons)
-     
+
       if (buttons) {
         console.log(this.defDropdownTrigger)
-        let parentElement:DefDropDownMenu | undefined;
+        let parentElement: DefDropDownMenu | undefined;
         if (slt.length > 0) {
           slt.forEach((element: any) => {
             console.log(element);
@@ -163,17 +163,17 @@ export class DefDropDownBtn extends LitElement {
                 element.classList.remove('show');
                 this._arialExpanded = false;
               } else {
-                if(this.defDropdownTrigger){
-                  const menuElements =  Array.from(document.querySelectorAll('def-dropdown-menu'));
-                  console.log({menuElements})
+                if (this.defDropdownTrigger) {
+                  const menuElements = Array.from(document.querySelectorAll('def-dropdown-menu'));
+                  console.log({ menuElements })
                   parentElement = menuElements.filter(ele => {
                     return ele.classList.contains('show')
                   }).pop();
                   console.log(parentElement?.getBoundingClientRect().width);
-  
+
                   // if(openedEl)
                 }
-                
+
 
                 this._arialExpanded = true;
                 element.classList.add('show')
@@ -181,7 +181,7 @@ export class DefDropDownBtn extends LitElement {
                 // element.style.inset = '0px auto auto 0px';
                 const dropdownMenuItem = element.getBoundingClientRect();
                 console.log(dropdownMenuItem)
-                const point: any = this._getPositionPoint(dropdownMenuItem,this.defDropdownTrigger,parentElement);
+                const point: any = this._getPositionPoint(dropdownMenuItem, this.defDropdownTrigger, parentElement);
                 // element.style.transform = `translateX(${point.positionX}px) translateY(${point.positionY}px)`;
                 element.style.left = `${point.positionX}px`;
                 element.style.top = `${point.positionY}px`;
@@ -193,96 +193,18 @@ export class DefDropDownBtn extends LitElement {
     }
   }
 
-  private _getPositionPoint(dropdownMenuItem: DOMRect, isSubMenu?:boolean, parentElement?:DefDropDownMenu) {
+  private _getPositionPoint(dropdownMenuItem: DOMRect, isSubMenu?: boolean, parentElement?: DefDropDownMenu) {
 
     if (this.shadowRoot) {
       const button = this.shadowRoot.querySelector('button');
-      const scrollX = document.documentElement.scrollTop;
 
-      if(isSubMenu && parentElement){
-        console.log(parentElement.getBoundingClientRect())
-        console.log(parentElement.getClientRects())
-        // console.log("on 205", button?.offsetLeft);
-        // console.log("on 205", button?.offsetWidth);
-        // console.log("on 205", button?.offsetTop);
-        // console.log("on 205", button?.offsetParent);
-        console.log(dropdownMenuItem.width + parentElement.getBoundingClientRect().width)
 
-        return {
-          positionX: parentElement.getBoundingClientRect().width,
-          positionY: button?.offsetTop
-        }
-
+      if (isSubMenu && parentElement) {
+        return this._setSubMenuPosition(dropdownMenuItem, parentElement, button);
       }
       console.log(button);
       if (button) {
-        const domRect: DOMRect = button.getBoundingClientRect();
-        const defaultPosition = {
-          positionX: domRect.x,
-          positionY: (scrollX + domRect.y + domRect.height)
-        };
-        switch (this.dropdownPosition) {
-          case 'bottom-left':
-            return defaultPosition;
-            break;
-          case 'bottom-right':
-            let positionX = (domRect.right - dropdownMenuItem.width)
-            if (positionX <= 0) {
-              positionX = domRect.x;
-            }
-            return {
-              positionX: (positionX),
-              positionY: (scrollX + domRect.y + domRect.height)
-            }
-            break;
-
-          case 'top-left':
-            return {
-              positionX: domRect.x,
-              positionY: (scrollX + domRect.y - dropdownMenuItem.height - DEFAULT_MARGIN)
-            }
-            break;
-          case 'top-right':
-            let positionTopX = domRect.right - dropdownMenuItem.width;
-            if (positionTopX <= 0) {
-              positionTopX = domRect.x;
-            }
-            return {
-              positionX: (positionTopX),
-              positionY: (scrollX + domRect.y - dropdownMenuItem.height - DEFAULT_MARGIN)
-            }
-            break;
-          case 'left-bottom':
-            return {
-              positionX: domRect.x - dropdownMenuItem.width - DEFAULT_MARGIN,
-              positionY: (scrollX + domRect.y)
-            }
-            break;
-          case 'left-top':
-            return {
-              positionX: (domRect.x - dropdownMenuItem.width - DEFAULT_MARGIN),
-              positionY: (scrollX + domRect.y - dropdownMenuItem.height + domRect.height)
-            }
-            break;
-
-          case 'right-top':
-            return {
-              positionX: domRect.x + domRect.width + DEFAULT_MARGIN,
-              positionY: (scrollX + domRect.y)
-            }
-            break;
-
-          case 'right-bottom':
-            return {
-              positionX: (domRect.x + domRect.width + DEFAULT_MARGIN),
-              positionY: (scrollX + domRect.y - dropdownMenuItem.height + domRect.height)
-            }
-            break;
-
-          default:
-            return defaultPosition
-            break;
-        }
+        return this._setMenuPosition(dropdownMenuItem, button)
       }
       return {
         positionX: -1,
@@ -293,6 +215,122 @@ export class DefDropDownBtn extends LitElement {
       positionX: -1,
       positionY: -1
     };
+  }
+
+
+  private _setMenuPosition(dropdownMenuItem: DOMRect, button?: HTMLButtonElement | null) {
+    if (button) {
+      const domRect: DOMRect = button.getBoundingClientRect();
+      const scrollX = document.documentElement.scrollTop;
+      const defaultPosition = {
+        positionX: domRect.x,
+        positionY: (scrollX + domRect.y + domRect.height)
+      };
+      switch (this.dropdownPosition) {
+        case 'bottom-left':
+          return defaultPosition;
+          break;
+        case 'bottom-right':
+          let positionX = (domRect.right - dropdownMenuItem.width)
+          if (positionX <= 0) {
+            positionX = domRect.x;
+          }
+          return {
+            positionX: (positionX),
+            positionY: (scrollX + domRect.y + domRect.height)
+          }
+          break;
+
+        case 'top-left':
+          return {
+            positionX: domRect.x,
+            positionY: (scrollX + domRect.y - dropdownMenuItem.height - DEFAULT_MARGIN)
+          }
+          break;
+        case 'top-right':
+          let positionTopX = domRect.right - dropdownMenuItem.width;
+          if (positionTopX <= 0) {
+            positionTopX = domRect.x;
+          }
+          return {
+            positionX: (positionTopX),
+            positionY: (scrollX + domRect.y - dropdownMenuItem.height - DEFAULT_MARGIN)
+          }
+          break;
+        case 'left-bottom':
+          return {
+            positionX: domRect.x - dropdownMenuItem.width - DEFAULT_MARGIN,
+            positionY: (scrollX + domRect.y)
+          }
+          break;
+        case 'left-top':
+          return {
+            positionX: (domRect.x - dropdownMenuItem.width - DEFAULT_MARGIN),
+            positionY: (scrollX + domRect.y - dropdownMenuItem.height + domRect.height)
+          }
+          break;
+
+        case 'right-top':
+          return {
+            positionX: domRect.x + domRect.width + DEFAULT_MARGIN,
+            positionY: (scrollX + domRect.y)
+          }
+          break;
+
+        case 'right-bottom':
+          return {
+            positionX: (domRect.x + domRect.width + DEFAULT_MARGIN),
+            positionY: (scrollX + domRect.y - dropdownMenuItem.height + domRect.height)
+          }
+          break;
+
+        default:
+          return defaultPosition
+          break;
+      }
+    }
+    return {
+      positionX: -1,
+      positionY: -1
+    }
+  }
+
+  private _setSubMenuPosition(dropdownMenuItem: DOMRect, parentElement: DefDropDownMenu, button?: HTMLButtonElement | null) {
+    const remainMargin = (parentElement.getBoundingClientRect().width - dropdownMenuItem.width);
+    const defaultPosition = {
+      positionX: parentElement.getBoundingClientRect().width,
+      positionY: (button?.offsetTop)
+    };
+
+    switch (this.dropdownPosition) {
+      case 'bottom-right':
+        return {
+          positionX: parentElement.getBoundingClientRect().width,
+          positionY: (button!.offsetTop + button!.getBoundingClientRect()?.height)
+        };;
+        break;
+
+      case 'top-left':
+        return {
+          positionX: -(parentElement.getBoundingClientRect().width - (remainMargin - DEFAULT_MARGIN)),
+          positionY: button?.offsetTop
+        };
+        break;
+
+      case 'top-right':
+        return defaultPosition;
+        break;
+
+      case 'bottom-left':
+      default:
+        return {
+          positionX: -(parentElement.getBoundingClientRect().width - (remainMargin - DEFAULT_MARGIN)),
+          positionY: (button!.offsetTop + button!.getBoundingClientRect()?.height)
+        };
+
+        break;
+
+    }
   }
   get assignedNodes() {
     if (this.shadowRoot) {
