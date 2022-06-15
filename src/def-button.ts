@@ -1,4 +1,4 @@
-import { WcTheme } from "./def-styles";
+// import { WcTheme } from "./def-styles";
 /**
  * An example element.
  *

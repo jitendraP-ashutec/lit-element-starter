@@ -5,7 +5,7 @@
  */
 
 import { LitElement, html, css } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, queryAssignedElements, state } from 'lit/decorators.js';
 import { DefDropDownMenu } from './def-dropdown-menu';
 
 export const DEFAULT_MARGIN = 3;
@@ -129,15 +129,19 @@ export class DefDropDownBtn extends LitElement {
   @property({ type: String })
   class: string = '';
 
-
   @property({ type: Boolean })
   disabled: boolean = false;
 
-  @property({ type: String })
+  @property({ type: String,  })
   dropdownPosition: string = 'bottom-left';
 
   @property({ type: Boolean })
   defDropdownTrigger: boolean;
+
+  @queryAssignedElements({slot: '', flatten: true})
+  protected tabsPanel!: any;
+
+  dropdownButton: any;
 
 
 
@@ -148,15 +152,11 @@ export class DefDropDownBtn extends LitElement {
   private _handleClick() {
     let slt: any = this.assignedNodes;
     if (this.shadowRoot) {
-      const buttons = this.shadowRoot.querySelector('button');
-      // if(buttons)
-
+      const buttons = this.dropdownButton;
       if (buttons) {
-        console.log(this.defDropdownTrigger)
         let parentElement: DefDropDownMenu | undefined;
         if (slt.length > 0) {
           slt.forEach((element: any) => {
-            console.log(element);
             if (element?.tagName === 'DEF-DROPDOWN-MENU') {
               // const menuItem = element.querySelector('.dropdown-menu');
               if (element.classList.contains('show')) {
@@ -165,13 +165,9 @@ export class DefDropDownBtn extends LitElement {
               } else {
                 if (this.defDropdownTrigger) {
                   const menuElements = Array.from(document.querySelectorAll('def-dropdown-menu'));
-                  console.log({ menuElements })
                   parentElement = menuElements.filter(ele => {
                     return ele.classList.contains('show')
                   }).pop();
-                  console.log(parentElement?.getBoundingClientRect().width);
-
-                  // if(openedEl)
                 }
 
 
@@ -180,7 +176,6 @@ export class DefDropDownBtn extends LitElement {
                 element.style.position = 'absolute';
                 // element.style.inset = '0px auto auto 0px';
                 const dropdownMenuItem = element.getBoundingClientRect();
-                console.log(dropdownMenuItem)
                 const point: any = this._getPositionPoint(dropdownMenuItem, this.defDropdownTrigger, parentElement);
                 // element.style.transform = `translateX(${point.positionX}px) translateY(${point.positionY}px)`;
                 element.style.left = `${point.positionX}px`;
@@ -196,13 +191,12 @@ export class DefDropDownBtn extends LitElement {
   private _getPositionPoint(dropdownMenuItem: DOMRect, isSubMenu?: boolean, parentElement?: DefDropDownMenu) {
 
     if (this.shadowRoot) {
-      const button = this.shadowRoot.querySelector('button');
+      const button = this.dropdownButton;
 
 
       if (isSubMenu && parentElement) {
         return this._setSubMenuPosition(dropdownMenuItem, parentElement, button);
       }
-      console.log(button);
       if (button) {
         return this._setMenuPosition(dropdownMenuItem, button)
       }
@@ -346,7 +340,7 @@ export class DefDropDownBtn extends LitElement {
   _closeButton = () => {
     let nodes: any = this.assignedNodes;
     if (this.shadowRoot) {
-      const buttons = this.shadowRoot.querySelector('button');
+      const buttons = this.dropdownButton;
       if (buttons) {
         if (nodes.length > 0) {
           if (nodes && nodes.length > 0) {
@@ -375,12 +369,22 @@ export class DefDropDownBtn extends LitElement {
     const dropDownItems = document.querySelectorAll(".dropdown-item");
     for (let item of dropDownItems) {
       item.addEventListener("click", this._closeButton);
-    }
-
-    // window.addEventListener('scroll', this._closeButton);
-
+    }  
   }
 
+  override firstUpdated() {
+      const slot = this.shadowRoot!.querySelector('slot');
+      let innerElements = slot!.assignedElements({flatten: true});
+      innerElements.forEach(element => {
+            if(element.hasAttribute('defdropdowntrigger')){
+              this.defDropdownTrigger = true;
+              element.addEventListener('click' , () =>{
+                this._handleClick()
+              });
+              this.dropdownButton = element;
+            }
+      });
+  }
 
   override disconnectedCallback() {
     super.disconnectedCallback()
@@ -388,24 +392,10 @@ export class DefDropDownBtn extends LitElement {
     for (let item of dropDownItems) {
       item.removeEventListener("click", this._closeButton);
     }
-    // window.removeEventListener('scroll', this._closeButton);
   }
 
   override render() {
     return html`
-                    <button type="button"
-                          @click="${this._handleClick}"
-                          id=${this.id}
-                          title=${this.label} 
-                          class=${this.class}
-                          value=${this.label} 
-                          ?disabled=${this.disabled}
-                          aria-label= ${this.ariaLabel}
-                          tabindex=${this.tabIndex}
-                          aria-expanded=${this._arialExpanded}
-                          >
-                          ${this.label}
-                     </button>
                   <slot></slot>
                
                `;

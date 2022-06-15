@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-import {LitElement, html, css} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import { LitElement, html, css } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 
 /**
  * An example element.
@@ -18,7 +18,17 @@ import {customElement, property} from 'lit/decorators.js';
 // https://github.com/lit/lit/discussions/2685
 @customElement('def-btn')
 export class DefBtn extends LitElement {
+
+  // static override shadowRootOptions:
+  //   ShadowRootInit = { mode: 'open', delegatesFocus: true };
+
   static override styles = css`
+
+    :host {
+      display: var(--lit-button-display, inline-block);
+      box-sizing: inherit;
+    }
+
    .def-btn-primary {
       color: #fff;
       background-color: #0076CE;
@@ -110,15 +120,15 @@ export class DefBtn extends LitElement {
   /**
    * The number of times the button has been clicked.
    */
-   @property({type: String})
-   label: string = '';
+  @property({ type: String })
+  label: string = '';
 
-   @property({type: String})
-   class: string = '';
+  @property({ type: String })
+  class: string = '';
 
 
-   @property({type: Boolean})
-   disabled: boolean = false;
+  @property({ type: Boolean })
+  disabled: boolean = false;
 
   //  override ariaLabel: string | null;
 
@@ -127,12 +137,16 @@ export class DefBtn extends LitElement {
   //   return this.ariaLabel;
   // }
 
+  constructor() {
+    super();
+    // this.disabled = false;
+  }
 
   override render() {
-    return  html`<button  type="button"
+    return html`<button  type="button"
                           id=${this.id}
                           title=${this.label} 
-                          class=${this.class}
+                          class=${'def-btn def-btn-primary'}
                           value=${this.label} 
                           ?disabled=${this.disabled}
                           aria-label= ${this.ariaLabel}
