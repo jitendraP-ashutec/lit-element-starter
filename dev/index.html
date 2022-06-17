@@ -9,9 +9,11 @@
   <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
   <script src="../node_modules/lit/polyfill-support.js"></script>
   <script type="module" src="../my-element.js"></script>
-  <script type="module" src="../def-tab.js"></script>
-  <script type="module" src="../def-tabs.js"></script>
+  <!-- <script type="module" src="../def-tab.js"></script>
+  <script type="module" src="../def-tabs.js"></script> -->
   <script type="module" src="../button/index.js"></script>
+  <script type="module" src="../tab/def-tabs.js"></script>
+  <script type="module" src="../tab/def-tab.js"></script>
   <script type="module" src="../def-dropdown-btn.js"></script>
   <script type="module" src="../def-dropdown-menu.js"></script>
   <!-- <script type="module" src="../def-styles.js"></script> -->
@@ -127,15 +129,34 @@
 
 <body>
  
-  <button is="def-button" class="corp-button"> Value </button>
+  <!-- <button is="def-button" class="corp-button"> Value </button>
   <def-btn aria-label="Button " label="Buttons" id="my-button"  tabindex="0"></def-btn>
   <def-btn label="Disable Button" onclick="welcome()" id="my-dis-button" class="def-btn def-btn-primary" disabled="true"
     tabindex="1"></def-btn>
   <def-btn label="Secondary " onclick="welcome()" id="my-button" class="def-btn def-btn-secondary" tabindex="2">
-  </def-btn>
+  </def-btn> -->
 
   <def-btn label="Secondary Disable" id="seconday-disable" class="def-btn def-btn-secondary" disabled="true"
     tabindex="3"></def-btn>
+
+
+  <def-tabs id="d"  label="jid">
+    <def-tab slot="def-tab" name="First"></def-tab>
+ 
+   
+    <div slot="def-tab-container">
+          <h1> Tab One Container </h1>
+    </div>
+    <def-tab slot="def-tab" name="Two"></def-tab>
+    <div slot="def-tab-container">
+        <h1> Tab Two Container </h1>
+      </div>
+      <def-tab slot="def-tab" name="Three"></def-tab>
+
+    <div slot="def-tab-container">
+      <h1> Tab Three Container </h1>
+    </div>
+  </def-tabs>
 
   <!-- <div style="margin:20px;"> 
       <def-dropdown-btn label="DropDown" id="seconday-disable" class="def-btn def-btn-primary" tabindex="3">
