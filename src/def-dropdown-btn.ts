@@ -5,7 +5,7 @@
  */
 
 import { LitElement, html, css } from 'lit';
-import { customElement, property, queryAssignedElements, state } from 'lit/decorators.js';
+import { customElement, property, queryAssignedElements } from 'lit/decorators.js';
 import { DefDropDownMenu } from './def-dropdown-menu';
 
 export const DEFAULT_MARGIN = 3;
@@ -142,11 +142,7 @@ export class DefDropDownBtn extends LitElement {
   protected tabsPanel!: any;
 
   dropdownButton: any;
-
-
-
-  @state()
-  private _arialExpanded: boolean = false;
+  _arialExpanded: boolean = false;
 
 
   private _handleClick() {
